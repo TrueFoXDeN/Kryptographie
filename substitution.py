@@ -1,66 +1,53 @@
 import numpy as np
 from itertools import permutations
+import re
 
 
-def encrypt(x, permutation):
-    permutation = handlenotzero(permutation)
-    chunksize = len(permutation)
-    segments = [x[i:i + chunksize] for i in range(0, len(x), chunksize)]
-    # print(segments, permutation, chunksize)
-    arr = []
-    for s in segments:
-        arr.append(encryptsegment(s, permutation, chunksize))
-    # Flatten und Leerzeichen entfernen, falls vorhanden
-    res = ''.join(arr).replace(" ", "")
-    return res
+def checkifkeyvalid(x):
+    keywords = ["DIE", "DER", "UND", "IM", "ZU", "DEN", "DAS"]
+    return all(s in x for s in keywords)
 
 
-def encryptsegment(segment, permutation, chunksize):
-    # Mit Leerzeichen auffüllen, falls Eingabe < Chunksize
-    segment = segment + (" " * (chunksize - len(segment)))
-
-    arr = [0] * chunksize
-
-    for i in range(chunksize):
-        arr[i] = segment[permutation[i]]
-
-    res = ''.join(arr)
-
-    return res
-
-
-def handlenotzero(permutation):
-    permutation = np.array(permutation)
-    if 0 not in permutation:
-        permutation -= 1
-    return permutation.tolist()
-
-
-def crack(x):
+def crack(x, dist):
     alphabet = [chr(x) for x in range(65, 91)]
-    dist = {}
+    currentdist = {}
     for a in alphabet:
-        dist[a] = x.count(a)
-    return dist
+        currentdist[a] = x.count(a)
+    currentdist = {k: v for k, v in sorted(currentdist.items(), key=lambda item: item[1], reverse=True)}
+    vals = list(currentdist.keys())
+
+    p = np.array(list(currentdist.values())) / 3114
+    ref = np.array(
+        [0.174, 0.0978, 0.0755, 0.0727, 0.07, 0.0651, 0.0615, 0.0508, 0.0476, 0.0435, 0.0344, 0.0306, 0.0301, 0.0253,
+         0.0251, 0.0189, 0.0189, 0.0166, 0.0121, 0.0113, 0.0079, 0.0067, 0.0031, 0.0027, 0.0004, 0.0003, 0.0002])
+    soldist = ["V", "Q", "O", "U", "N", "K", "M", "B", "C", "F", "W", "G", "E", "T", "D", "X", "H", "I", "A", "J", "P",
+               "R", "Z", "L", "Y", "S"]
+
+    # print(vals)
+    print(p)
+    print(ref)
+    print(vals)
+    print(soldist)
+    print(dist)
+    res = ""
+    for s in x:
+        if re.match("[A-Z]+", s):
+            res += s
+        else:
+            res += dist[soldist.index(s)]
+    # zipped = zip(currentdist, dist)
+    # mappedvalues = dict(zipped)
+
+    # print(mappedvalues)
+    print(checkifkeyvalid(res))
+    return res
 
 
-def getinvolution(x, ps):
-    for p in ps:
-        d = encrypt(encrypt(x, p), p)
-        if x == d:
-            print(p)
+f = open("data/chiffrat.txt", "r")
+text = f.read().replace("Ä", "AE").replace("Ü"),
+germandist = ["E", "N", "I", "S", "R", "A", "T", "D", "H", "U", "L", "C", "G", "M", "O", "B", "W", "F", "K", "Z", "P",
+              "V", "J", "Y", "X", "Q"]
+modifieddist = ["E", "N", "S", "A", "I", "R", "U", "D", "H", "U", "L", "C", "G", "M", "O", "B", "W", "F", "K", "Z", "P",
+                "V", "J", "Y", "X", "Q"]
 
-
-x = 'WHYCRYPTOGRAPHYISHARDERTHANITLOOKS'
-# x = '8367649164'
-# x = 'WUEHLMAEUSESINDINEUROPAASIENUNDNORDAMERIKAVERBREITETBEVORZUGTERLEBENSRAUMSINDLEICHTEBISMITTELSCHWEREBOEDENINDENENSIEOHNESCHWIERIGKEITENIHRGANGSYSTEMANLEGENKOENNENWOBEILOESSBOEDENBESONDERSBEVORZUGTWERDEN'
-# p = [7, 8, 9, 2, 1, 0, 5, 4, 3, 6]
-p = [1, 3, 2]
-
-# print(x)
-print(encrypt(x, p))
-# print('------------')
-# print(encrypt('WYHCYRPOTGARPYHIHSADRETRHNAILTOKOS', p))
-ps = set(permutations(p))
-
-getinvolution(x, ps)
+print(crack(text, germandist))
