@@ -22,8 +22,8 @@ def crack(x, dist):
                "R", "Z", "L", "Y", "S"]
 
     # print(vals)
-    print(p)
-    print(ref)
+    # print(p)
+    # print(ref)
     print(vals)
     print(soldist)
     print(dist)
@@ -37,7 +37,7 @@ def crack(x, dist):
     # mappedvalues = dict(zipped)
 
     # print(mappedvalues)
-    print(checkifkeyvalid(res))
+    # print(checkifkeyvalid(res))
     return res
 
 
