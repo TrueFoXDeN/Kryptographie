@@ -30,9 +30,9 @@ def reconvert(x):
     return [chr(a + 65) for a in x]
 
 
-x = 'WHYCRYPTOGRAPHYISHARDERTHANITLOOKS'
-y = 'NVKGIMBXFUDEGVKMJVMVUSDXYOZMKZASBG'
-k = convert(['R', 'O', 'M', 'E'])
-
-print(encrypt(x, k, 26))
-print(decrypt(y, k, 26))
+# x = 'WHYCRYPTOGRAPHYISHARDERTHANITLOOKS'
+# y = 'NVKGIMBXFUDEGVKMJVMVUSDXYOZMKZASBG'
+# k = convert(['R', 'O', 'M', 'E'])
+#
+# print(encrypt(x, k, 26))
+# print(decrypt(y, k, 26))
