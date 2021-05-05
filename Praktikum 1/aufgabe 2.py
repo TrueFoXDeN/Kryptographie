@@ -134,8 +134,9 @@ def recunstructkey(x, keylength):
                 break
 
     # print("['I', 'X', 'B', 'Q', 'H', 'Y', 'G', 'J', 'L', 'V']")
-    print(key)
+    # print(key)
     key = 'IXBQHYGJLV'
+    print(f'Key: {key}')
     print(vigenere.decrypt(x, vigenere.convert(key), 26))
 
 
@@ -143,7 +144,7 @@ f = open("data/chiffrat2.txt", "r")
 x = f.read()
 # x = 'NVKGIMBXFUDEGVKMJVMVUSDXYOZMKZASBG'
 # print(f'Koinzidenz: {koinzidenz(x, 5):.4f}')
-# koinzidenz(x, 5)
+# print(koinzidenz(x, 4))
 # reconstructkeylength(x, 4, 11)
 # print(speziellekoinzidenz(x, 4))
 recunstructkey(x, 10)
