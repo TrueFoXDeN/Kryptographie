@@ -1,12 +1,6 @@
 import numpy as np
 import time
 
-
-def bitwise_xor_bytes(a, b):
-    result_int = int.from_bytes(a, byteorder="big") ^ int.from_bytes(b, byteorder="big")
-    return result_int.to_bytes(max(len(a), len(b)), byteorder="big")
-
-
 def Decrypt(ciphertext, key):
     encryptedBytes = []
     with open(ciphertext, "rb") as f:
