@@ -35,11 +35,13 @@ def bruteforceAES():
             print(s)
             key = bytes.fromhex(s + keypart)
             cipher = AES.new(key, AES.MODE_CBC, iv)
-            ct = cipher.decrypt(message)
-            # ct = unpad(cipher.decrypt(message), AES.block_size)
-            res = ct.decode("ASCII")
-            print(res)
-            return
+            # ct = cipher.decrypt(message)
+            ct = unpad(cipher.decrypt(message), AES.block_size)
+            # res = ct.decode("ASCII")
+            hexct = binascii.b2a_hex(ct)
+            if hexct.startswith(b'25 50 44 46 2D'):
+                return hexct
+
         except:
             # print(s)
             continue
@@ -52,4 +54,4 @@ if __name__ == '__main__':
 
     values = product(hexvalues, repeat=2)
     # print(values)
-    bruteforceAES()
+    print(bruteforceAES())
