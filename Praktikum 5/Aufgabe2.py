@@ -19,6 +19,9 @@ def chinesischer_restsatz(p, q, n, d, x):
 
 if __name__ == '__main__':
     p, q, n, phi, e, d = Aufgabe1.rsa(3000)
-    cr = chinesischer_restsatz(p, q, n, d, 30)
+    message_encrypted = Aufgabe1.testrsa(n, e, d, b'30')
+
+    message_encrypted_int = int.from_bytes(message_encrypted, "big")
+    cr = chinesischer_restsatz(p, q, n, d, message_encrypted_int)
     print(cr)
-    Aufgabe1.testrsa(n, e, d, b'30')
+

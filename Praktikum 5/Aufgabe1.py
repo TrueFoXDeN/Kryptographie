@@ -83,6 +83,8 @@ def testrsa(n, e, d, message):
 
     print(f'Decrypted Message: {message_decrypted}')
 
+    return message_encrypted
+
 if __name__ == '__main__':
     # primeresult = generatePrime(1500, 10)
     # print(f'Average time: {primeresult[0]:.4f} seconds')
